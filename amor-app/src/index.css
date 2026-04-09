@@ -1,0 +1,311 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+/* ============================
+   Design Tokens
+   ============================ */
+:root {
+  --navy-deep:    #060d1f;
+  --navy-mid:     #0d1a35;
+  --navy-card:    #111e3d;
+  --navy-light:   #162447;
+  --blue:         #1d4ed8;
+  --blue-bright:  #3b82f6;
+  --blue-glow:    #60a5fa;
+  --sky:          #bae6fd;
+  --text:         #e2e8f0;
+  --text-muted:   #94a3b8;
+
+  /* Layout mobile */
+  --tab-h:        68px;       /* altura da tab bar */
+  --page-px:      20px;       /* padding horizontal padrão de página */
+  --card-radius:  20px;       /* border-radius dos cards */
+}
+
+/* ============================
+   Reset & Base
+   ============================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  /* Deixa o conteúdo subir sob o status bar */
+  background: var(--navy-deep);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background:
+    radial-gradient(ellipse at top left,  rgba(29,78,216,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at bottom right, rgba(59,130,246,0.12) 0%, transparent 55%),
+    linear-gradient(160deg, #060d1f 0%, #0d1a35 50%, #060d1f 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport para iOS Safari */
+  color: var(--text);
+  overscroll-behavior-y: none;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* ============================
+   Brilho ambiente sutil
+   ============================ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(96,165,250,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 60%, rgba(96,165,250,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 85%, rgba(59,130,246,0.15) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================
+   Animações
+   ============================ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1);    }
+  14%       { transform: scale(1.22); }
+  28%       { transform: scale(1);    }
+  42%       { transform: scale(1.14); }
+  70%       { transform: scale(1);    }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 24px rgba(59,130,246,0.2); }
+  50%       { box-shadow: 0 0 52px rgba(59,130,246,0.5), 0 0 80px rgba(29,78,216,0.18); }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-7px); }
+}
+
+@keyframes tabDot {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* ============================
+   Keyframe adicional
+   ============================ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================
+   Classes utilitárias
+   ============================ */
+.fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.heart-beat {
+  animation: heartbeat 1.8s ease-in-out infinite;
+}
+
+.glow-card {
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+.float-anim {
+  animation: floatY 4s ease-in-out infinite;
+}
+
+/* Wrapper de seção — garante padding, max-width e espaço abaixo da tab bar */
+.section-container {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 32px var(--page-px) calc(var(--tab-h) + 20px);
+}
+
+/* Botão primário de ação */
+.action-button {
+  padding: 14px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(96,165,250,0.22);
+  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(59,130,246,0.35);
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+  letter-spacing: 0.02em;
+}
+
+.action-button:hover {
+  box-shadow: 0 10px 40px rgba(59,130,246,0.55);
+  transform: translateY(-1px);
+}
+
+.action-button:active {
+  transform: scale(0.97);
+}
+
+/* Campo de input/textarea */
+.input-field {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(59,130,246,0.2);
+  color: #f8fafc;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.input-field::placeholder {
+  color: rgba(148,163,184,0.45);
+}
+
+.input-field:focus {
+  border-color: rgba(96,165,250,0.55);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+}
+
+/* Spinner de carregamento */
+.loader {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(59,130,246,0.15);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 0.85s linear infinite;
+}
+
+/* Glass card padrão */
+.glass-card {
+  background: rgba(13, 26, 53, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(59,130,246,0.18);
+  border-radius: var(--card-radius);
+  padding: 20px;
+  box-shadow: 0 4px 28px rgba(0,0,0,0.3);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+/* Eyebrow text (label de seção) */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--blue-glow);
+}
+
+/* ============================
+   Scrollbar
+   ============================ */
+::-webkit-scrollbar        { width: 4px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: rgba(59,130,246,0.35); border-radius: 4px; }
+
+/* ============================
+   Tab Bar
+   ============================ */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--tab-h) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  background: rgba(6, 13, 31, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(59,130,246,0.14);
+  display: flex;
+  align-items: stretch;
+  z-index: 100;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: var(--text-muted);
+  transition: color 0.2s ease, transform 0.15s ease;
+  -webkit-user-select: none;
+  user-select: none;
+  position: relative;
+}
+
+.tab-item:active {
+  transform: scale(0.88);
+}
+
+.tab-item.active {
+  color: var(--blue-glow);
+}
+
+.tab-icon {
+  font-size: 22px;
+  line-height: 1;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tab-item.active .tab-icon {
+  transform: translateY(-2px) scale(1.15);
+}
+
+.tab-label {
+  font-size: 10px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+
+/* Píula de indicador ativo */
+.tab-item.active::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+  box-shadow: 0 2px 8px rgba(59,130,246,0.6);
+  animation: tabDot 0.25s cubic-bezier(0.34,1.56,0.64,1) both;
+}
